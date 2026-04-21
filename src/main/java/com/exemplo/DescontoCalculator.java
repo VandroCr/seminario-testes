@@ -26,6 +26,14 @@ public class DescontoCalculator {
         // Avaliamos as duas condicoes que compoem a tabela de decisao.
         boolean ehVip = (tipo == TipoCliente.VIP);
         boolean compraAcima100 = (valorCompra > 100.0);
+        // White-Box:
+        // - 3 decisoes no if-else (complexidade ciclomatica = 4)
+        // - 4 caminhos independentes (um por regra da tabela)
+        // Cobertura feita em TestesDemonstracao:
+        // - descontoVipComCompraAlta
+        // - descontoVipComCompraBaixa
+        // - descontoRegularComCompraAlta
+        // - descontoRegularComCompraBaixa
 
         // A estrutura if-else reflete diretamente as quatro combinacoes da tabela.
         if (ehVip && compraAcima100) {

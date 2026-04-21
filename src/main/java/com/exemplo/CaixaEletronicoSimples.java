@@ -35,6 +35,8 @@ public class CaixaEletronicoSimples {
      * Transicao: OCIOSO -> CARTAO_INSERIDO
      */
     public void inserirCartao() {
+        // White-Box: decisao com 2 ramos (insercao valida/invalida).
+        // Coberto no caminho feliz e no caminho de bloqueio em TestesDemonstracao.
         if (estadoAtual == Estado.OCIOSO) {
             estadoAtual = Estado.CARTAO_INSERIDO;
             System.out.println("> Cartao inserido. Por favor, digite o PIN.");
@@ -51,6 +53,14 @@ public class CaixaEletronicoSimples {
      *   - CARTAO_INSERIDO + PIN incorreto (tentativas == 3) -> BLOQUEADO
      */
     public void digitarPin(int pin) {
+        // White-Box: metodo com multiplas decisoes e caminhos:
+        // - guarda de estado invalido
+        // - PIN correto
+        // - PIN incorreto com/sem bloqueio
+        // Complexidade ciclomatica deste metodo e alta para o tamanho dele.
+        // Cobertura principal em:
+        // - caminhoFelizAteLevantamento
+        // - caminhoBloqueioAposTresTentativasErradas
         if (estadoAtual != Estado.CARTAO_INSERIDO) {
             System.out.println("> [ERRO] Nao e possivel digitar PIN no estado " + estadoAtual);
             return;
@@ -76,6 +86,8 @@ public class CaixaEletronicoSimples {
      * Transicao: MENU -> OPERACAO_CONCLUIDA -> ejetar cartao -> OCIOSO
      */
     public void selecionarOperacao(String operacao) {
+        // White-Box: 2 ramos (estado MENU vs restante).
+        // Ramo de sucesso exercitado em caminhoFelizAteLevantamento.
         if (estadoAtual == Estado.MENU) {
             System.out.printf("> A processar operacao: %s...%n", operacao);
             estadoAtual = Estado.OPERACAO_CONCLUIDA;
@@ -90,6 +102,8 @@ public class CaixaEletronicoSimples {
      * Transicao: varios estados -> OCIOSO (exceto BLOQUEADO)
      */
     public void ejectarCartao() {
+        // White-Box: 3 ramos (BLOQUEADO, com cartao, sem cartao).
+        // Ramo BLOQUEADO e exercitado apos 3 PINs errados.
         if (estadoAtual == Estado.BLOQUEADO) {
             System.out.println("> O cartao esta bloqueado e nao pode ser ejetado.");
         } else if (estadoAtual != Estado.OCIOSO) {

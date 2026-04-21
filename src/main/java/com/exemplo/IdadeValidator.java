@@ -18,6 +18,10 @@ public class IdadeValidator {
      * @return true se a idade for valida, false caso contrario
      */
     public static boolean isIdadeValida(int idade) {
+        // White-Box: 1 decisao booleana (complexidade ciclomatica = 2).
+        // Coberto em TestesDemonstracao:
+        // - idadeValidaDentroDoIntervalo (ramo true)
+        // - idadeInvalidaForaDoIntervalo (ramo false)
         // A condicao implementa exatamente o requisito.
         return idade >= IDADE_MINIMA && idade <= IDADE_MAXIMA;
     }
